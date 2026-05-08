@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Errors — Plugin Test App</title>
+  <style>
+    body { font-family: sans-serif; margin: 40px; }
+    nav { margin-bottom: 20px; }
+    nav a { margin-right: 12px; }
+    .error { color: red; border: 1px solid red; padding: 8px; margin: 8px 0; }
+    .warning { color: orange; border: 1px solid orange; padding: 8px; margin: 8px 0; }
+    .alert { color: #856404; background: #fff3cd; border: 1px solid #ffc107; padding: 8px; margin: 8px 0; }
+    .danger { color: white; background: #dc3545; padding: 8px; margin: 8px 0; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="errors.html">Errors Page</a>
+    <a href="slow.html">Slow Page</a>
+    <a href="dynamic.html">Dynamic Elements</a>
+  </nav>
+
+  <h1 data-test-id="errors-title">Errors Page</h1>
+
+  <div class="error" data-test-id="error-block">Something went wrong! Critical failure.</div>
+  <div class="warning" data-test-id="warning-block">Warning: disk space is running low.</div>
+  <div class="alert" data-test-id="alert-block">Alert: your session will expire in 5 minutes.</div>
+  <div class="danger" data-test-id="danger-block">Danger: this action is irreversible!</div>
+
+  <button data-test-id="trigger-console-error" id="trigger-error-btn">Trigger Console Error</button>
+  <button data-test-id="trigger-console-warning" id="trigger-warn-btn">Trigger Console Warning</button>
+
+  <script>
+    document.getElementById('trigger-error-btn').addEventListener('click', function() {
+      console.error('Test console error: Something broke in the app');
+      console.error('Test console error: Database connection failed');
+    });
+
+    document.getElementById('trigger-warn-btn').addEventListener('click', function() {
+      console.warn('Test console warning: Deprecated API usage');
+    });
+
+    console.error('Page load error: Failed to fetch user preferences');
+  </script>
+</body>
+</html>

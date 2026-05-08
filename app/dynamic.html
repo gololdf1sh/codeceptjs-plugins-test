@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Elements — Plugin Test App</title>
+  <style>
+    body { font-family: sans-serif; margin: 40px; }
+    nav { margin-bottom: 20px; }
+    nav a { margin-right: 12px; }
+    button { padding: 8px 16px; margin: 8px 4px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
+    .card { border: 1px solid #ddd; padding: 12px; margin: 8px 0; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="errors.html">Errors Page</a>
+    <a href="slow.html">Slow Page</a>
+    <a href="dynamic.html">Dynamic Elements</a>
+  </nav>
+
+  <h1 data-test-id="dynamic-title">Dynamic Elements</h1>
+
+  <!-- For heal plugin: button that changes its locator -->
+  <div id="healable-container">
+    <button data-test-id="submit-action" id="submit-btn" class="submit-btn-v1">Submit</button>
+  </div>
+  <button data-test-id="break-locator" id="break-btn">Break Submit Locator</button>
+  <div id="submit-result" data-test-id="submit-result" style="display:none;">Submitted!</div>
+
+  <!-- For customLocator: elements with various data attributes -->
+  <div class="card" data-test-id="card-alpha" data-qa="card-alpha">
+    <h3>Card Alpha</h3>
+    <button data-test-id="card-alpha-btn" data-qa="alpha-action">Alpha Action</button>
+  </div>
+
+  <div class="card" data-test-id="card-beta" data-qa="card-beta">
+    <h3>Card Beta</h3>
+    <button data-test-id="card-beta-btn" data-qa="beta-action">Beta Action</button>
+  </div>
+
+  <div id="card-action-result" data-test-id="card-action-result" style="display:none;"></div>
+
+  <!-- Flaky element: appears/disappears randomly — for retryFailedStep -->
+  <div id="flaky-zone" data-test-id="flaky-zone">
+    <span id="flaky-element" data-test-id="flaky-element">Now you see me</span>
+  </div>
+
+  <script>
+    // Submit button
+    document.getElementById('submit-btn').addEventListener('click', function() {
+      document.getElementById('submit-result').style.display = 'block';
+    });
+
+    // Break locator: changes the submit button's id and data-test-id
+    document.getElementById('break-btn').addEventListener('click', function() {
+      var btn = document.getElementById('submit-btn');
+      btn.removeAttribute('data-test-id');
+      btn.removeAttribute('id');
+      btn.className = 'submit-btn-v2 primary-action';
+      btn.setAttribute('data-action', 'submit');
+    });
+
+    // Card actions
+    document.querySelectorAll('[data-qa$="-action"]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var result = document.getElementById('card-action-result');
+        result.style.display = 'block';
+        result.textContent = btn.textContent + ' clicked!';
+      });
+    });
+
+    // Flaky element: toggles visibility every 800ms
+    var flakyVisible = true;
+    setInterval(function() {
+      var el = document.getElementById('flaky-element');
+      flakyVisible = !flakyVisible;
+      el.style.display = flakyVisible ? 'inline' : 'none';
+    }, 800);
+  </script>
+</body>
+</html>

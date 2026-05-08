@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard — Plugin Test App</title>
+  <style>
+    body { font-family: sans-serif; margin: 40px; }
+    nav { margin-bottom: 20px; }
+    nav a { margin-right: 12px; }
+    .user-info { background: #e8f5e9; padding: 12px; border-radius: 4px; margin: 12px 0; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="errors.html">Errors Page</a>
+    <a href="slow.html">Slow Page</a>
+    <a href="dynamic.html">Dynamic Elements</a>
+  </nav>
+
+  <h1 data-test-id="dashboard-title">Dashboard</h1>
+
+  <div class="user-info" data-test-id="user-info" id="user-info">
+    Loading...
+  </div>
+
+  <button data-test-id="logout-button" id="logout-btn">Log Out</button>
+
+  <script>
+    var token = localStorage.getItem('auth_token');
+    var user = localStorage.getItem('auth_user');
+
+    if (!token) {
+      window.location.href = 'login.html';
+    } else {
+      document.getElementById('user-info').textContent = 'Logged in as: ' + user;
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', function() {
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('auth_user');
+      document.cookie = 'auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>

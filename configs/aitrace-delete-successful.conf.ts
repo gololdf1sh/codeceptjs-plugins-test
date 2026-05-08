@@ -1,0 +1,29 @@
+import "dotenv/config";
+
+export const config: CodeceptJS.MainConfig = {
+  name: "aitrace-delete-successful",
+  tests: "../tests/aiTrace/{passing,failing}.test.ts",
+  require: ["tsx/cjs"],
+  output: "../output/aitrace-delete-successful",
+
+  helpers: {
+    Playwright: {
+      url: "http://localhost:8787",
+      show: false,
+      browser: "chromium",
+      waitForNavigation: "load",
+      windowSize: "1280x720",
+    },
+  },
+
+  plugins: {
+    aiTrace: {
+      enabled: true,
+      deleteSuccessful: true,
+    },
+    retryFailedStep: { enabled: false },
+    screenshot: { enabled: false },
+  },
+
+  include: {},
+};

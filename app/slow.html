@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slow Page — Plugin Test App</title>
+  <style>
+    body { font-family: sans-serif; margin: 40px; }
+    nav { margin-bottom: 20px; }
+    nav a { margin-right: 12px; }
+    .loading { color: gray; font-style: italic; }
+    .loaded { color: green; }
+    button { padding: 8px 16px; margin: 8px 4px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="errors.html">Errors Page</a>
+    <a href="slow.html">Slow Page</a>
+    <a href="dynamic.html">Dynamic Elements</a>
+  </nav>
+
+  <h1 data-test-id="slow-title">Slow Page</h1>
+
+  <button data-test-id="slow-button-1s" id="slow-1s">Slow Action (1s)</button>
+  <button data-test-id="slow-button-3s" id="slow-3s">Slow Action (3s)</button>
+  <button data-test-id="slow-button-10s" id="slow-10s">Very Slow Action (10s)</button>
+
+  <div id="slow-result" data-test-id="slow-result" class="loading" style="display:none;"></div>
+
+  <div data-test-id="delayed-content" id="delayed-content" style="display:none;">
+    <h2>Delayed Content Loaded</h2>
+    <button data-test-id="delayed-button" id="delayed-btn">Click After Load</button>
+  </div>
+
+  <div id="delayed-btn-result" data-test-id="delayed-button-result" style="display:none;">Delayed button clicked!</div>
+
+  <script>
+    function slowAction(delay) {
+      var result = document.getElementById('slow-result');
+      result.style.display = 'block';
+      result.className = 'loading';
+      result.textContent = 'Processing...';
+
+      setTimeout(function() {
+        result.className = 'loaded';
+        result.textContent = 'Action completed after ' + (delay / 1000) + 's';
+      }, delay);
+    }
+
+    document.getElementById('slow-1s').addEventListener('click', function() { slowAction(1000); });
+    document.getElementById('slow-3s').addEventListener('click', function() { slowAction(3000); });
+    document.getElementById('slow-10s').addEventListener('click', function() { slowAction(10000); });
+
+    // Delayed content appears after 2s — for testing autoDelay and retryFailedStep
+    setTimeout(function() {
+      document.getElementById('delayed-content').style.display = 'block';
+    }, 2000);
+
+    // Delayed button handler attached after 1s — for testing autoDelay
+    setTimeout(function() {
+      document.getElementById('delayed-btn').addEventListener('click', function() {
+        document.getElementById('delayed-btn-result').style.display = 'block';
+      });
+    }, 1000);
+  </script>
+</body>
+</html>

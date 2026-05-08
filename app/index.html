@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plugin Test App</title>
+  <style>
+    body { font-family: sans-serif; margin: 40px; }
+    nav { margin-bottom: 20px; }
+    nav a { margin-right: 12px; }
+    .error { color: red; border: 1px solid red; padding: 8px; margin: 8px 0; }
+    .warning { color: orange; border: 1px solid orange; padding: 8px; margin: 8px 0; }
+    .alert { color: #856404; background: #fff3cd; border: 1px solid #ffc107; padding: 8px; margin: 8px 0; }
+    .danger { color: white; background: #dc3545; padding: 8px; margin: 8px 0; }
+    .success-message { color: green; display: none; margin: 8px 0; }
+    form { max-width: 300px; margin: 20px 0; }
+    input, button { display: block; margin: 8px 0; padding: 8px; width: 100%; box-sizing: border-box; }
+    button { cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
+    button:hover { background: #0056b3; }
+    .item-list { margin: 20px 0; }
+    .item-list .item { padding: 8px; border-bottom: 1px solid #eee; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="errors.html">Errors Page</a>
+    <a href="slow.html">Slow Page</a>
+    <a href="dynamic.html">Dynamic Elements</a>
+  </nav>
+
+  <h1 data-test-id="page-title">Plugin Test App</h1>
+
+  <p>Home page for testing CodeceptJS 4.x plugins.</p>
+
+  <div class="item-list">
+    <div class="item" data-test-id="item-1">Item One</div>
+    <div class="item" data-test-id="item-2">Item Two</div>
+    <div class="item" data-test-id="item-3">Item Three</div>
+  </div>
+
+  <button data-test-id="action-button" id="action-btn">Click Me</button>
+  <div class="success-message" data-test-id="action-result" id="action-result">Action completed!</div>
+
+  <script>
+    document.getElementById('action-btn').addEventListener('click', function() {
+      document.getElementById('action-result').style.display = 'block';
+    });
+  </script>
+</body>
+</html>

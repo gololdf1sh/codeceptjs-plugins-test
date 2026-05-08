@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login — Plugin Test App</title>
+  <style>
+    body { font-family: sans-serif; margin: 40px; }
+    nav { margin-bottom: 20px; }
+    nav a { margin-right: 12px; }
+    form { max-width: 300px; margin: 20px 0; }
+    input, button { display: block; margin: 8px 0; padding: 8px; width: 100%; box-sizing: border-box; }
+    button { cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
+    .error-message { color: red; display: none; margin: 8px 0; }
+    .success-message { color: green; display: none; margin: 8px 0; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="errors.html">Errors Page</a>
+    <a href="slow.html">Slow Page</a>
+    <a href="dynamic.html">Dynamic Elements</a>
+  </nav>
+
+  <h1 data-test-id="login-title">Login</h1>
+
+  <form id="login-form" onsubmit="return false;">
+    <input type="text" id="username" data-test-id="username-input" placeholder="Username" />
+    <input type="password" id="password" data-test-id="password-input" placeholder="Password" />
+    <button type="submit" data-test-id="login-button" id="login-btn">Log In</button>
+  </form>
+
+  <div class="error-message" id="error-msg" data-test-id="login-error">Invalid credentials</div>
+  <div class="success-message" id="success-msg" data-test-id="login-success">Welcome back!</div>
+
+  <script>
+    document.getElementById('login-btn').addEventListener('click', function() {
+      var user = document.getElementById('username').value;
+      var pass = document.getElementById('password').value;
+
+      if (user === 'admin' && pass === 'admin') {
+        document.getElementById('success-msg').style.display = 'block';
+        document.getElementById('error-msg').style.display = 'none';
+        localStorage.setItem('auth_token', 'valid-session-token-123');
+        localStorage.setItem('auth_user', user);
+        document.cookie = 'auth=valid-session-token-123; path=/';
+        setTimeout(function() { window.location.href = 'dashboard.html'; }, 500);
+      } else {
+        document.getElementById('error-msg').style.display = 'block';
+        document.getElementById('success-msg').style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

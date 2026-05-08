@@ -1,0 +1,23 @@
+{
+  "name": "codeceptjs-plugins-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@codeceptjs/configure": "^4.0.0-beta.4",
+    "codeceptjs": "^4.0.0-rc.20",
+    "dotenv": "^17.4.2",
+    "playwright": "^1.59.1"
+  },
+  "devDependencies": {
+    "@ai-sdk/anthropic": "^3.0.76",
+    "tsx": "^4.21.0"
+  }
+}
