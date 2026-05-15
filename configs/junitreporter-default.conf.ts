@@ -1,12 +1,10 @@
 import "dotenv/config";
-import "../heal.mjs";
-import { anthropic } from "@ai-sdk/anthropic";
 
 export const config: CodeceptJS.MainConfig = {
-  name: "heal-default",
-  tests: "../tests/heal/broken-locator.test.ts",
-  require: ["tsx/cjs", "./heal.js"],
-  output: "../output/heal-default",
+  name: "junitreporter-default",
+  tests: "../tests/smoke.test.ts",
+  require: ["tsx/cjs"],
+  output: "../output/junitreporter-default",
 
   helpers: {
     Playwright: {
@@ -18,13 +16,13 @@ export const config: CodeceptJS.MainConfig = {
     },
   },
 
-  ai: {
-    model: anthropic("claude-sonnet-4-6"),
-  },
-
   plugins: {
-    heal: {
+    junitReporter: {
       enabled: true,
+      outputName: "report.xml",
+      attachMeta: true,
+      attachSteps: true,
+      stepsInFailure: true,
     },
     retryFailedStep: { enabled: false },
     screenshot: { enabled: false },
